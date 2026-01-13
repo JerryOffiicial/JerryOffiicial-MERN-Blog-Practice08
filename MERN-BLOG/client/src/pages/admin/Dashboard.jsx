@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { assets } from "../../assets/assets";
+import { assets, blog_data } from "../../assets/assets";
+import BlogTableItem from "../../components/admin/BlogTableItem";
 
 const Dashboard = () => {
   const [dashboardData, setDashboadData] = useState({
     blogs: 10,
-    comments: 0,
+    comments: 5,
     drafts: 0,
-    recentBlogs: [],
+    recentBlogs: blog_data.slice(0, 5),
   });
 
   const fetchDashboard = async () => {
@@ -69,7 +70,9 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-               
+               {dashboardData.recentBlogs.map((blog, index)=>{
+                  return <BlogTableItem key={blog.id} blog={blog} fetchBlogs={fetchDashboard} index={index+1}/>
+               })}
             </tbody>
           </table>
         </div>
