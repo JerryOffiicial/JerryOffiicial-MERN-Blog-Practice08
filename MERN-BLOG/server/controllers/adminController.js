@@ -14,7 +14,7 @@ export const adminLogin = async (req, res) => {
 
     const token = jwt.sign({ email }, process.env.JWT_SECRET);
 
-    res.json({ success: true, token });
+    res.json({ success: true, token , message: "Login Successfull"});
   } catch (error) {
     res.json({ success: false, message: error.message });
   }
@@ -43,7 +43,7 @@ export const getAllComments = async (req, res) => {
 export const getDashboard = async (req, res) => {
   try {
     const recentBlogs = await Blog.find({})
-      .toSorted({ createdAt: -1 })
+      .sort({ createdAt: -1 })
       .limit(5);
     const blogs = await Blog.countDocuments();
     const comments = await Comment.countDocuments();

@@ -1,3 +1,5 @@
 npm i motion
 npm i moment - <p>Published on {Moment(data.createdAt).format('MMMM Do YYYY')}</p>
 npm i quill - import 'quill/dist/quill.snow.css' -for quill tool
+npm i axios
+npm i react-hot-toast

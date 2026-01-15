@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { assets, blog_data } from "../../assets/assets";
 import BlogTableItem from "../../components/admin/BlogTableItem";
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
   const [dashboardData, setDashboadData] = useState({
@@ -10,8 +12,15 @@ const Dashboard = () => {
     recentBlogs: blog_data.slice(0, 5),
   });
 
+  const { axios } = useAppContext();
+
   const fetchDashboard = async () => {
-    setDashboadData(dashboardData);
+    try {
+      const {data} = await axios.get('/api/admin/dashboard')
+      data.success? setDashboadData(data.dashboardData) : toast.error(data.message)
+    } catch (error) {
+      toast.error(error.message)
+    }
   };
 
   useEffect(() => {
@@ -62,17 +71,34 @@ const Dashboard = () => {
           <table className="w-full text-sm text-gray-500">
             <thead className="text-xs text-gray-600 text-left uppercase">
               <tr>
-                <th scope="col" className="px-2 py-4 xl:px-6">#</th>
-                <th scope="col" className="px-2 py-4">Blog Title</th>
-                <th scope="col" className="px-2 py-4 max-sm:hidden">Date</th>
-                <th scope="col" className="px-2 py-4 max-sm:hidden">Status</th>
-                <th scope="col" className="px-2 py-4">Actions</th>
+                <th scope="col" className="px-2 py-4 xl:px-6">
+                  #
+                </th>
+                <th scope="col" className="px-2 py-4">
+                  Blog Title
+                </th>
+                <th scope="col" className="px-2 py-4 max-sm:hidden">
+                  Date
+                </th>
+                <th scope="col" className="px-2 py-4 max-sm:hidden">
+                  Status
+                </th>
+                <th scope="col" className="px-2 py-4">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
-               {dashboardData.recentBlogs.map((blog, index)=>{
-                  return <BlogTableItem key={blog.id} blog={blog} fetchBlogs={fetchDashboard} index={index+1}/>
-               })}
+              {dashboardData.recentBlogs.map((blog, index) => {
+                return (
+                  <BlogTableItem
+                    key={blog.id}
+                    blog={blog}
+                    fetchBlogs={fetchDashboard}
+                    index={index + 1}
+                  />
+                );
+              })}
             </tbody>
           </table>
         </div>
