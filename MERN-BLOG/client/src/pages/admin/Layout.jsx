@@ -5,7 +5,7 @@ import Sidebar from "../../components/admin/Sidebar";
 import { useAppContext } from "../../context/AppContext";
 
 const Layout = () => {
-  const { axios, removeAuthToken, navigate } = useAppContext();
+  const { removeAuthToken, navigate } = useAppContext();
   const logout = () => {
     removeAuthToken();
     navigate("/");

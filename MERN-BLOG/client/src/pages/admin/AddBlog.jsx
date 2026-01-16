@@ -4,10 +4,12 @@ import { useState, useRef } from "react";
 import Quill from "quill";
 import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
+import { parse } from "marked";
 
 const AddBlog = () => {
   const { axios } = useAppContext();
   const [isAdding, setIsAdding] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const editorRef = useRef(null);
   const quillRef = useRef(null);
@@ -18,7 +20,25 @@ const AddBlog = () => {
   const [category, setcategory] = useState("Startup");
   const [isPublished, setIsPublished] = useState(false);
 
-  const generateContent = async () => {};
+  const generateContent = async () => {
+    if (!title) return toast.error("Please enter a title");
+
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/api/blog/generate", {
+        prompt: title,
+      });
+      if (data.success) {
+        quillRef.current.root.innerHTML = parse(data.content);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onSubmitHandler = async (e) => {
     try {
@@ -106,12 +126,18 @@ const AddBlog = () => {
         <p className="mt-4">Blog Description</p>
         <div className="max-w-lg h-74 pb-16 sm:pb-10 pt-2 relative">
           <div ref={editorRef}></div>
+
+          {loading && (<div  className="absolute inset-0 flex items-center justify-center bg-black/10 mt-2">
+              <div className="w-8 h-8 rounded-full border-2 border-t-white animate-spin"></div>
+            </div>)}
+          
           <button
+            disabled={loading} //to avoid the over loading
             type="button"
             onClick={generateContent}
             className="absolute bottom-1 right-2 ml-2 text-xs text-white bg-black/70 px-4 py-1.5 rounded hover:underline cursor-pointer "
           >
-            Generate with AI
+            {loading ? "Generating..." : "Generate with AI"}
           </button>
         </div>
 
@@ -119,6 +145,8 @@ const AddBlog = () => {
         <select
           name="category"
           className="mt-2 px-3 py-2 border text-gray-500 border-gray-300 outline-none rounded"
+          value={category}
+          onChange={(e) => setcategory(e.target.value)}
         >
           <option value="">Select category</option>
           {blogCategories.map((item, index) => {
