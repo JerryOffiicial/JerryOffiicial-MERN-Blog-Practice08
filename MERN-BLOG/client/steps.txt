@@ -3,3 +3,5 @@ npm i moment - <p>Published on {Moment(data.createdAt).format('MMMM Do YYYY')}</
 npm i quill - import 'quill/dist/quill.snow.css' -for quill tool
 npm i axios
 npm i react-hot-toast
+Google gemini api> create Api key> new project> copy the key 
+npm i marked
