@@ -4,4 +4,7 @@ npm i quill - import 'quill/dist/quill.snow.css' -for quill tool
 npm i axios
 npm i react-hot-toast
 Google gemini api> create Api key> new project> copy the key 
-npm i marked
+npm i marked - parse the paragraph 
+
+
+VITE_BASE_URL=''
