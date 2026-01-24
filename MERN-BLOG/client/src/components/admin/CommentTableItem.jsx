@@ -19,7 +19,7 @@ const CommentTableItem = ({ comment, fetchComments }) => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.success(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -35,7 +35,7 @@ const CommentTableItem = ({ comment, fetchComments }) => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.success(error.message);
+      toast.error(error.message);
     }
   };
 

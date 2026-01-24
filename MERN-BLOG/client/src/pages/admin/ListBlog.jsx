@@ -51,7 +51,7 @@ const ListBlog = () => {
             {blogs.map((blog, index) => {
               return (
                 <BlogTableItem
-                  key={blog.id}
+                  key={blog._id}
                   blog={blog}
                   fetchBlogs={fetchBlogs}
                   index={index + 1}
