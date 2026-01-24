@@ -2,3 +2,24 @@ npm init -y
 npm i express mongoose cors dotenv jsonwebtoken multer
 npm i nodemon --save-dev
 npm install @imagekit/nodejs    -imagekit.io
+
+
+
+
+# JWT Secret
+JWT_SECRET = ''
+
+# Admin Credentials
+ADMIN_EMAIL = ""
+ADMIN_PASSWORD=""
+
+# MongoDB
+MONGODB_URI=""
+
+# ImageKit
+IMAGEKIT_PUBLIC_KEY = ''
+IMAGEKIT_PRIVATE_KEY = ''
+IMAGEKIT_URL_ENDPOINT = ''
+
+#Gemini API Key
+GEMINI_API_KEY = ""
